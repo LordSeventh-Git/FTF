@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     --><link rel="stylesheet" href="index.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <title>FTF</title>
+</head>
+<body>
+    <!-- <div id="root">
+            <div id="home">
+                <button>Playoffs</button>
+            <button>Finals</button>
+            </div>
+            <div id="playoffs">
+                <div class="info">
+                    <button class="back info__button">
+                        Back
+                    </button>
+                    <button class="info__button">
+                        Reset
+                    </button>
+                    <button class="info__button">
+                        Generate
+                    </button>
+                </div>
+                <div class="items">
+                    <div class="item">
+                        <div>Kpessekou 1</div>
+                        <div>Playoff City 1: <b>Kara</b></div>
+                        <div>Playoff City 2: <b>Lomé</b></div>
+                    </div>
+                </div>
+            </div>
+            <div id="finals">
+                <div class="info finals__info">
+                    <div>
+                        <button class="back info__button finals__button">
+                            Back
+                        </button>
+                        <button id="finals__reset" class="info__button finals__button">
+                            Reset
+                        </button>
+                    </div>
+                    <div>
+                        <select class="finals__select" name="region1" id="region1"></select>
+                        <select class="finals__select" name="region2" id="region2"></select>
+                        <button id="finals__generate" class="info__button finals__button">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+                <div class="items" id="final__items">
+                    <div class="item">
+                        <div>Zobibi 1</div>
+                        <div>Playoff City 1: <b>Kara</b></div>
+                        <div>Playoff City 2: <b>Lomé</b></div>
+                    </div>
+                </div>
+            </div>
+    </div> -->
+    
+    <div id="root">
+        <div class="info">
+            <div class="game title">Welcome to FTF Games</div>
+            <div class="row game">
+                <label for="gameType">Enter Game Type</label>
+                <select name="gameType" id="gameType">
+                    <option value="playoff">Kpessekou</option>
+                    <option value="final">Zobibi</option>
+                </select>
+            </div>
+            <div class="row game finalSelect"><label for="region1">Enter Region 1</label><select name="region1" id="region1"></select></div>
+            <div class="row game finalSelect"><label for="region2">Enter Region 2</label><select name="region2" id="region2"></select></div>
+            
+            <div class="buttons game">
+                <button id="resetButton">Reset</button>
+                <button id="generateButton">Generate</button>
+            </div>
+        </div>
+        <div id="output_playoff">
+            <div class="game title">Kpessekou</div>
+            <!-- <div class="item">
+                <div>1</div>
+                <div>Playoff City 1: <b>Kara</b></div>
+                <div>Playoff City 2: <b>Lomé</b></div>
+            </div> -->
+        </div>
+        <div id="output_final">
+            <div class="game title">Zobibi</div>
+            <!-- <div class="item">
+                <div>1</div>
+                <div>Final City 1: <b>Kara</b></div>
+                <div>Final City 2: <b>Lomé</b></div>
+            </div> -->
+        </div>
+    </div>
+</body>
+<script src="data.js"></script>
+<script src="utils.js"></script>
+<script src="index.js"></script>
+</html>
