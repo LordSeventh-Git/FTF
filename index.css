@@ -9,6 +9,7 @@ button:hover{
 #root{
     height: 100vh;
     display: flex;
+    margin-top: 100px;
 }
 
 .info{

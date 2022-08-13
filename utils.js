@@ -67,7 +67,6 @@ function getRandomCities() {
   let chosenRegions = Array(2)
     .fill(undefined)
     .map(() => selectRandomly(currentRegions));
-  console.log(chosenRegions);
 
   // If regions are the same, restart the function
   if (chosenRegions[0].name === chosenRegions[1].name) {
