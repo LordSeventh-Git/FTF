@@ -1,4 +1,4 @@
-const cities = [
+/* const cities = [
   {
     name: "Lomé",
     region: "Maritime",
@@ -96,3 +96,29 @@ const cities = [
 const regions = ["Maritime", "Plateaux", "Centrale", "Kara", "Savanes"];
 
 let remainingCities = [];
+ */
+
+const regions = [
+  {
+    name: "Maritime",
+    cities: ["Lomé", "Tsévié", "Aného", "Vogan", "Tabligbo"],
+  },
+  {
+    name: "Plateaux",
+    cities: ["Kpalimé", "Atakpamé", "Notsé", "Badou", "Amlamé"],
+  },
+  {
+    name: "Centrale",
+    cities: ["Sokodé", "Tchamba", "Sotouboua"],
+  },
+  {
+    name: "Kara",
+    cities: ["Kara", "Bassar", "Niamtougou", "Bafilo", "Kandé", "Kpagouda"],
+  },
+  {
+    name: "Savanes",
+    cities: ["Mango", "Dapaong", "Biankouri", "Galangachi"],
+  },
+];
+
+let remainingRegions = [];

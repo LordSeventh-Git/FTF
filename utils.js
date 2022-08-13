@@ -1,10 +1,14 @@
 let finalSelects = document.getElementsByClassName("finalSelect");
 let selects = document.querySelectorAll(".finalSelect select");
 
-function getCitiesFromRegion(region) {
+/* function getCitiesFromRegion(region) {
   return cities
     .filter((city) => city.region === region)
     .map((city) => city.name);
+} */
+
+function getCitiesFromRegion(region) {
+  return regions.filter((reg) => reg.name === region)[0].cities;
 }
 
 function getRandomNumber(length) {
@@ -16,10 +20,10 @@ function selectRandomly(array) {
 }
 
 function removeFromArray(array, item) {
-  return array.filter((element) => element.name != item.name);
+  return array.filter((element) => element != item);
 }
 
-function getRandomCities() {
+/* function getRandomCities() {
   if (
     remainingCities.length === 0 ||
     remainingCities.length === 1 ||
@@ -42,6 +46,48 @@ function getRandomCities() {
   remainingCities = removeFromArray(remainingCities, city2);
 
   return [city1, city2].map((city) => city.name);
+} */
+
+function getRemainingRegions() {
+  // If remaining regions is empty or contains just one region available
+  if (remainingRegions.length === 0 || remainingRegions.length === 1) {
+    return regions;
+  }
+  return remainingRegions;
+}
+
+function getRandomCities() {
+  let currentRegions = getRemainingRegions();
+  let region1 = selectRandomly(currentRegions);
+  let region2 = selectRandomly(currentRegions);
+
+  if (region1.name === region2.name) {
+    //console.log("Again");
+    return getRandomCities();
+  }
+
+  let city1 = selectRandomly(region1.cities);
+  let city2 = selectRandomly(region2.cities);
+
+  remainingRegions = currentRegions.map((reg) => {
+    if (reg.name === region1.name) {
+      reg.cities = removeFromArray(reg.cities, city1);
+      return reg;
+    }
+    return reg;
+  });
+
+  remainingRegions = remainingRegions.map((reg) => {
+    if (reg.name === region2.name) {
+      reg.cities = removeFromArray(reg.cities, city2);
+      return reg;
+    }
+    return reg;
+  });
+
+  remainingRegions = remainingRegions.filter((reg) => reg.cities.length !== 0);
+
+  return [city1, city2];
 }
 
 function toggleDisplay(element, display) {
@@ -68,7 +114,7 @@ function setRegions(elements) {
     for (let j = 0; j < regions.length; j++) {
       elements[
         i
-      ].innerHTML += `<option value=${regions[j]}>${regions[j]}</option>`;
+      ].innerHTML += `<option value=${regions[j].name}>${regions[j].name}</option>`;
     }
   }
 }
