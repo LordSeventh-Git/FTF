@@ -4,7 +4,7 @@ const assert = chai.assert;
 
 describe("getCitiesFromRegion", () => {
   it("should get a region's cities", () => {
-    expect(getCitiesFromRegion("Maritime")).to.deep.equal([
+    expect(getCitiesFromRegion(regions, "Maritime")).to.deep.equal([
       "Lomé",
       "Tsévié",
       "Aného",

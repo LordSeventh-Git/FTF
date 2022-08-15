@@ -1,15 +1,10 @@
-let finalSelects = document.getElementsByClassName("finalSelect");
-let selects = document.querySelectorAll(".finalSelect select");
-
-// Persist regions to local storage
-localStorage.setItem("regions", JSON.stringify(regions));
-
 /**
  * Gets a region's cities
+ * @param {Array} regions The list of regions
  * @param {string} region The region's cities to get
  * @returns {Array.<string>} The cities of the region region
  */
-function getCitiesFromRegion(region) {
+function getCitiesFromRegion(regions, region) {
   return regions.filter((reg) => reg.name === region)[0].cities;
 }
 
@@ -43,13 +38,15 @@ function removeFromArray(array, item) {
 
 /**
  * Gets the remaining regions in which to randomly select
+ * @param {Array} remainingRegions The remaining regions
+ * @param {string} regionsFromStorage The regions taken from local storage
  * @returns The remaining regions
  */
-function getRemainingRegions() {
+function getRemainingRegions(remainingRegions, regionsFromStorage) {
   // If remaining regions is empty or contains just one region available
   // Get regions from local storage
   if (remainingRegions.length === 0 || remainingRegions.length === 1) {
-    return JSON.parse(localStorage.getItem("regions"));
+    return JSON.parse(regionsFromStorage);
   }
 
   // Otherwise return remaining regions
@@ -58,10 +55,12 @@ function getRemainingRegions() {
 
 /**
  * Returns random cities in different regions
+ * @param {string} regionsFromStorage The regions taken from local storage
+ * @param {Array} currentRegions The remaining regions
  * @returns {Array.<string>} Random cities
  */
-function getRandomCities() {
-  let currentRegions = getRemainingRegions();
+function getRandomCities(regionsFromStorage, currentRegions) {
+  currentRegions = getRemainingRegions(currentRegions, regionsFromStorage);
 
   // Gets random regions
   let chosenRegions = Array(2)
@@ -70,7 +69,7 @@ function getRandomCities() {
 
   // If regions are the same, restart the function
   if (chosenRegions[0].name === chosenRegions[1].name) {
-    return getRandomCities();
+    return getRandomCities(regionsFromStorage, remainingRegions);
   }
 
   // Get random cities
@@ -94,52 +93,6 @@ function getRandomCities() {
 }
 
 /**
- * Toggle the display of and HTML element
- * @param {HTMLElement} element The HTML element's display to change
- * @param {string} display The new display
- */
-function toggleDisplay(element, display) {
-  element.style.display = display;
-}
-
-/**
- * Toggles Regions display
- * @param {HTMLCollection} elements The elements display to change
- * @param {string} display The new display
- */
-function toggleRegions(elements, display) {
-  for (let i = 0; i < elements.length; i++) {
-    toggleDisplay(elements[i], display);
-  }
-}
-
-/**
- * Sets game type. Playoff or final
- */
-function setGameType() {
-  if (gameType.value === "final") {
-    toggleRegions(finalSelects, "flex");
-    setRegions(selects);
-  } else {
-    toggleRegions(finalSelects, "none");
-  }
-}
-
-/**
- * Displays the regions to the user to select
- * @param {HTMLCollection} elements The elements in which to display the regions
- */
-function setRegions(elements) {
-  for (let i = 0; i < elements.length; i++) {
-    for (let j = 0; j < regions.length; j++) {
-      elements[
-        i
-      ].innerHTML += `<option value=${regions[j].name}>${regions[j].name}</option>`;
-    }
-  }
-}
-
-/**
  * Gets selected regions values
  * @param {HTMLCollection} elements The elements that provide selected regions values
  * @returns {Array.<string>} The selected regions
@@ -153,46 +106,13 @@ function getValues(elements) {
 }
 
 /**
- * Return an array of two random cities according to the provided regions
+ * Returns an array of two random cities according to the provided regions
+ * @param {Array} regions The list of regions
+ * @param {HTMLCollection} elements The elements that provide selected regions values
  * @returns {Array.<string>} An array of random cities
  */
-function getFinalsCities() {
-  return getValues(selects)
-    .map((region) => getCitiesFromRegion(region))
+function getFinalsCities(regions, elements) {
+  return getValues(elements)
+    .map((region) => getCitiesFromRegion(regions, region))
     .map((cities) => selectRandomly(cities));
-}
-
-/**
- * Displays the playoffs
- * @param {string} id The id of the HTML tag in which to display
- * @param {Array.<string>} cities The cities to display
- */
-function setOutput(id, cities) {
-  document.getElementById(id).innerHTML += `<div class="item">
-    <div>City 1: <b>${cities[0]}</b></div>
-    <div>City 2: <b>${cities[1]}</b></div>
-  </div>`;
-}
-
-/**
- * Handles the generate button onclick event
- */
-function handleGenerateButton() {
-  if (gameType.value === "final") {
-    setOutput("output_final", getFinalsCities());
-  } else {
-    setOutput("output_playoff", getRandomCities());
-  }
-}
-
-/**
- * Handles the reset button onclick event
- */
-function handleResetButton() {
-  document.getElementById(
-    "output_playoff"
-  ).innerHTML = `<div class="game title">Kpessekou</div>`;
-  document.getElementById(
-    "output_final"
-  ).innerHTML = `<div class="game title">Zobibi</div>`;
 }
